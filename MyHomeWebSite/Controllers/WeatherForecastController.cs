@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using MyHomeWebSite.Model;
-using System.Collections.Generic;
 
 namespace MyHomeWebSite.Controllers
 {
@@ -10,7 +9,7 @@ namespace MyHomeWebSite.Controllers
     {
         private static readonly string[] Summaries = new[]
         {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+        "ABC", "DEF", "GGG", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
