@@ -9,7 +9,7 @@ namespace MyHomeWebSite.Controllers
     {
         private static readonly string[] Summaries = new[]
         {
-        "ABC", "DEF", "GGG", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+        "ABC", "DEF", "GGG"
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
