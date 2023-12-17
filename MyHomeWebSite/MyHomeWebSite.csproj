@@ -20,4 +20,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.25" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Methos\Extension\" />
+  </ItemGroup>
+
 </Project>

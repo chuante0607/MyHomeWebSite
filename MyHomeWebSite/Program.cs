@@ -1,12 +1,18 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using MyHomeWebSite.Methods;
+using MyHomeWebSite.Methos;
 using MyHomeWebSite.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+//DI dbcontext
 builder.Services.AddDbContext<MyDBContext>(options =>
        options.UseSqlServer(builder.Configuration.GetConnectionString("MyDB")));
+
+builder.Services.AddScoped<LoginMethod>();
+builder.Services.AddScoped<UserMethod>();
+
 //CROS
 builder.Services.AddCors(options =>
 {

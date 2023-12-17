@@ -239,29 +239,28 @@
             body: JSON.stringify(model)
         }
 
-       await fetchResponse(url, options)
+        await fetchResponse(url, options)
     }
 
     function fetchResponse(url, options) {
-        try {
-            fetch(url, options).then(response => {
-                console.log(response);
-                return
-                const errorElem = document.getElementById('errorMsg')
-                if (!response.ok) {
-                    errorElem.classList.add('text-danger')
-                    errorElem.textContent = '查無此用戶'
-                } else {
-                    errorElem.classList.remove('text-danger')
-                    errorElem.textContent = ''
-                    return response.json();
-                }
-            }).then(data => {
-                //window.location.href = data.url;
-                //window.localStorage.setItem('UserID', data.id)
-            })
-        } catch (error) {
-            console.log('error', error);
-        }
+        fetch(url, options).then(response => {
+            const errorElem = document.getElementById('errorMsg')
+            if (response.ok) {
+                errorElem.classList.remove('text-danger')
+                errorElem.textContent = ''
+                return response.json();
+            } else {
+                errorElem.classList.add('text-danger')
+                errorElem.textContent = '查無此用戶'
+                throw (new Error('查無此用戶'));
+            }
+        }).then(data => {
+            if (data) {
+                window.location.href = data.url;
+                window.localStorage.setItem('employee', JSON.stringify(data.employee))
+            }
+        }).catch(error => {
+            console.log(error);
+        })
     }
 </script>

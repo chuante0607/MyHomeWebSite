@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyHomeWebSite.Methos;
+using MyHomeWebSite.Models;
 
 namespace MyHomeWebSite.Controllers
 {
@@ -6,10 +8,20 @@ namespace MyHomeWebSite.Controllers
     [Route("api/[controller]")]
     public class HomeController : Controller
     {
-        [HttpGet]
-        public IActionResult Index(Login user)
+        private readonly UserMethod _userMethod;
+
+
+        public HomeController(UserMethod userMethod)
         {
-            return Ok();
+            _userMethod = userMethod;
+        }
+
+
+        [HttpGet]
+        async public Task<IActionResult> Index([FromQuery] Login login)
+        {
+            Aemployee employee = await _userMethod.GetUser(login);
+            return Ok(new { Url = "/WebPages/Index.Html", Employee = employee });
         }
     }
 }

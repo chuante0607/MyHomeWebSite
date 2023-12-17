@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MyHomeWebSite.Methods;
 using MyHomeWebSite.Models;
 
 namespace MyHomeWebSite.Controllers
@@ -8,16 +9,11 @@ namespace MyHomeWebSite.Controllers
     [Route("api/[controller]")]
     public class LoginController : ControllerBase
     {
-        private readonly MyDBContext _dbContext;
-        public LoginController(MyDBContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+        private readonly LoginMethod _loginMethod;
 
-        [HttpGet]
-        public async Task<IActionResult> Login()
+        public LoginController(LoginMethod loginMethod)
         {
-            return Ok();
+            _loginMethod = loginMethod;
         }
 
         /// <summary>
@@ -28,44 +24,14 @@ namespace MyHomeWebSite.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] Login login)
         {
-            login.ValidIdentity();
-            var result = await _dbContext.Adata.FirstOrDefaultAsync(l => l.Account == login.Account && l.PassWord == login.PassWord);
-            if (result == null)
+            bool validResult = await _loginMethod.ValidLogin(login);
+            if (validResult)
             {
-                return Unauthorized(login);
+                return RedirectToAction("Index", "Home", login);
             }
-            return Ok(new { Id = result.UserId, Url = "/WebPages/Index.Html" });
-        }
-    }
-
-    public class Login
-    {
-        public string? Account { get; set; }
-        public string? PassWord { get; set; }
-        public string? Identity { get; set; }
-        public string? UserId { get; set; }
-        public void ValidIdentity()
-        {
-            if (!string.IsNullOrEmpty(this.Identity))
+            else
             {
-                switch (this.Identity)
-                {
-                    case "admin":
-                        this.Account = "Admin";
-                        this.PassWord = "123";
-                        break;
-                    case "manager":
-                        this.Account = "Manager";
-                        this.PassWord = "123";
-                        break;
-                    case "user":
-                        Random random = new Random();
-                        this.Account = "User" + random.Next(19);
-                        this.PassWord = "123";
-                        break;
-                    default:
-                        break;
-                }
+                return Unauthorized();
             }
         }
     }
