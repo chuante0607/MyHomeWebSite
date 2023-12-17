@@ -1,35 +1,15 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using MyHomeWebSite.Models;
+嚜簑sing Microsoft.AspNetCore.Mvc;
 
 namespace MyHomeWebSite.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class HomeController : ControllerBase
+    public class HomeController : Controller
     {
-        private readonly MyDBContext _dbContext;
-        public HomeController(MyDBContext dbContext)
+        [HttpGet]
+        public IActionResult Index(Login user)
         {
-            _dbContext = dbContext;
-        }
-        [HttpPost]
-        public async Task<IActionResult> Index([FromBody] Login login)
-        {
-            var result = await _dbContext.Adata.FirstOrDefaultAsync(f => f.Account == login.Account && f.PassWord == login.PassWord);
-
-            if (result == null)
-            {
-                return Unauthorized(new { ErrorMsg = "查無此用戶" });
-            }
             return Ok();
         }
-    }
-
-    public class Login
-    {
-        public string Account { get; set; }
-        public string PassWord { get; set; }
     }
 }
