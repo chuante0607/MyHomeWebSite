@@ -23,5 +23,21 @@ namespace MyHomeWebSite.Controllers
             Aemployee employee = await _userMethod.GetUser(login);
             return Ok(new { Url = "/WebPages/Index.Html", Employee = employee });
         }
+
+        [HttpPost]
+        async public Task<List<Aemployee>> Index([FromBody] string identity)
+        {
+            if (identity == "admin")
+            {
+                return await _userMethod.GetUsers();
+            }
+            return new List<Aemployee>();
+        }
+
+        [HttpPut]
+        async public Task<List<Aemployee>> Index([FromBody] User user)
+        {
+            return await _userMethod.UpdateUser(user);
+        }
     }
 }

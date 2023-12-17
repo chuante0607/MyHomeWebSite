@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using MyHomeWebSite.Methods;
 using MyHomeWebSite.Models;
 

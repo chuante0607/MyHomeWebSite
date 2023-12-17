@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\WebPages\Index.Html" />
     <None Include="wwwroot\WebPages\Login.html" />
   </ItemGroup>
 

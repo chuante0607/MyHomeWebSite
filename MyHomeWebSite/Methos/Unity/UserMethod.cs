@@ -12,6 +12,11 @@ namespace MyHomeWebSite.Methos
             _dbContext = dbContext;
         }
 
+        /// <summary>
+        /// 取得User資料
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
         async public Task<Aemployee> GetUser(Login login)
         {
             try
@@ -27,5 +32,40 @@ namespace MyHomeWebSite.Methos
                 return new Aemployee();
             }
         }
+        /// <summary>
+        /// 取得User清單
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        async public Task<List<Aemployee>> GetUsers()
+        {
+            try
+            {
+                return await _dbContext.Aemployees.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        async public Task<List<Aemployee>> UpdateUser(User user)
+        {
+            try
+            {
+                var data = await _dbContext.Aemployees.FirstOrDefaultAsync(d => d.UserId == user.UserId);
+                if (data != null)
+                {
+                    data.Avatar = user.Avatar;
+                    _dbContext.SaveChanges();
+                }
+                return await GetUsers();
+            }
+            catch (Exception ex)
+            {
+                return new List<Aemployee>();
+            }
+        }
+
     }
 }
