@@ -26,6 +26,11 @@
             display: initial;
             width: initial
         }
+
+        .userInfo {
+            background-image: url('/img/light-live-background-css.jpg');
+            box-shadow: rgba(0,0,0,0.2) 2px 2px;
+        }
     </style>
 </head>
 <body class="d-flex flex-column h-100">
@@ -62,23 +67,6 @@
         <header class="py-5">
             <div class="container px-5 pb-5">
                 <div class="row gx-5 align-items-center">
-                    <div class="col-xxl-5">
-                        <!-- Header text content-->
-                        <div class="text-center text-xxl-start">
-                            <div class="badge bg-gradient-primary-to-secondary text-white mb-4">
-                                <div class="text-uppercase">Development &middot; </div>
-                            </div>
-                            <div class="fs-3 fw-light text-muted"><!--I can help your business to--></div>
-                            <h1 class="display-3 fw-bolder mb-5"><span class="text-gradient d-inline">MY GROUP</span></h1>
-                            <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xxl-start mb-3">
-                                <a class="btn btn-outline-dark btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder" onclick="getEmps()" id="auth" style="display:none">Authorization</a>
-                                <a class="btn btn-primary btn-lg px-5 py-3 fs-6 fw-bolder">Information</a>
-                            </div>
-                        </div>
-                        <div id="talbeContainer">
-
-                        </div>
-                    </div>
                     <div class="col-xxl-7">
                         <!-- Header profile picture-->
                         <div class="d-flex justify-content-center mt-5 mt-xxl-0">
@@ -201,11 +189,31 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col">
+                        <div class="text-center text-xxl-start">
+                            <div class="badge bg-gradient-primary-to-secondary text-white mb-4">
+                                <div class="text-uppercase">Development &middot; </div>
+                            </div>
+                            <div class="fs-3 fw-light text-muted"><!--I can help your business to--></div>
+                            <h1 class="display-3 fw-bolder mb-5"><span class="text-gradient d-inline">MY GROUP</span></h1>
+
+                        </div>
+                    </div>
+                    <div class="mt-5">
+                        <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xxl-start mb-3">
+                            <a class="btn btn-outline-dark btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder" onclick="getUsers()" id="auth" style="display:none">Authorization</a>
+                            <a class="btn btn-primary btn-lg px-5 py-3 fs-6 fw-bolder" onclick="getUserInfo()">Information</a>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div id="talbeContainer">
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
         <!-- About Section-->
-        <section class="bg-light py-5">
+        <!--<section class="bg-light py-5">
             <div class="container px-5">
                 <div class="row gx-5 justify-content-center">
                     <div class="col-xxl-8">
@@ -222,20 +230,13 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section>-->
     </main>
     <!-- Footer-->
     <footer class="bg-white py-4 mt-auto">
         <div class="container px-5">
             <div class="row align-items-center justify-content-between flex-column flex-sm-row">
                 <div class="col-auto"><div class="small m-0">Copyright &copy; Your Website 2023</div></div>
-                <div class="col-auto">
-                    <a class="small" href="#!">Privacy</a>
-                    <span class="mx-1">&middot;</span>
-                    <a class="small" href="#!">Terms</a>
-                    <span class="mx-1">&middot;</span>
-                    <a class="small" href="#!">Contact</a>
-                </div>
             </div>
         </div>
     </footer>
@@ -278,16 +279,32 @@
         }
         userIdElem.innerHTML = user.userId
     }
-    //依權限取得使用者資料
-    async function getEmps() {
+    //取得個人資訊
+    function getUserInfo() {
+        const talbeContainer = document.getElementById('talbeContainer')
+        const birthdate = new Date(user.birthday)
+        talbeContainer.innerHTML =
+            `<div class='userInfo'>
+                <ul>
+                    <li>ID: ${user.userId}</li>
+                    <li>姓名:${user.name}</li>
+                    <li>部門:${user.unit}</li>
+                    <li>生日:${birthdate.toLocaleDateString()}</li>
+                    <li>年齡:${user.age}歲</li>
+                    <li>地址:${user.addr}</li>
+                </ul>
+            </div>
+            `;
+
+    }
+    //取得所有使用者資料
+    async function getUsers() {
         const url = '/api/Home'
-        const identity = user.userId
         const options = {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(identity)
         }
 
         await fetchResponse(url, options)
@@ -328,9 +345,11 @@
         //tbody
         const tbodyElem = document.createElement('tbody')
         Array.from(data).forEach((e, i) => {
-
-            //User清單管理員不條列出來
+            //User清單條列
             if (e.avatar !== 'A') {
+                if (user.avatar === 'B' && e.avatar === 'B') {
+                    return;
+                }
                 let avatarColor = ''
                 let avatarTitle = ''
                 switch (e.avatar) {
@@ -344,15 +363,20 @@
                         break
                 }
                 const selectHtml =
-                    `<select class="form-select aria-label="Default select example" id="${i}authSelect">
+                    `<select class="form-select aria-label="Default select example" id="${i}authSelect" style="display:${user.avatar === 'B' ? 'none' : 'inline-block'}">
                         <option value="B" ${e.avatar === 'B' ? 'selected' : ''}>幹部</option>
                         <option value="C" ${e.avatar === 'C' ? 'selected' : ''}>使用者</option>
-                     </select>`;
+                     </select>
+                     <a onclick="saveHandler('${i}', '${e.userId}')" class="save" title="存檔"><i class="fa-solid fa-floppy-disk" style="color: #ff0000;"></i></a>
+                     `;
+                const delHtml =
+                    `
+                        <label class="btn btn-outline-danger" onclick="delHandler('${e.userId}', '${e.name}')">刪除</label>
+                    `;
                 const temp =
                     `
                     <td>
-                        ${selectHtml}
-                        <a onclick="saveHandler('${i}', '${e.userId}')" class="save" title="存檔"><i class="fa-solid fa-floppy-disk" style="color: #ff0000;"></i></a>
+                        ${user.avatar === 'A' ? selectHtml : delHtml}
                     </td>
                     <td>
                         ${e.name}
@@ -363,7 +387,7 @@
                     <td>
                         <span class="badge ${avatarColor}">${avatarTitle}</span>
                     </td>
-                 `;
+                    `;
                 const row = document.createElement('tr')
                 row.innerHTML = temp
                 tbodyElem.appendChild(row)
@@ -372,7 +396,7 @@
         tableElem.appendChild(tbodyElem)
         talbeContainer.appendChild(tableElem)
     }
-
+    //存檔
     async function saveHandler(index, userId) {
         const authSelect = document.getElementById(index + 'authSelect')
         const url = '/api/Home'
@@ -389,5 +413,10 @@
         }
         await fetchResponse(url, options)
     }
+    //刪除
+    async function delHandler(userId, name) {
+        if (confirm(`確定要刪除${name}`)) {
 
+        }
+    }
 </script>

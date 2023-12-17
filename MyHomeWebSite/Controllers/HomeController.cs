@@ -25,13 +25,9 @@ namespace MyHomeWebSite.Controllers
         }
 
         [HttpPost]
-        async public Task<List<Aemployee>> Index([FromBody] string identity)
+        async public Task<List<Aemployee>> Index()
         {
-            if (identity == "admin")
-            {
-                return await _userMethod.GetUsers();
-            }
-            return new List<Aemployee>();
+            return await _userMethod.GetUsers();
         }
 
         [HttpPut]
