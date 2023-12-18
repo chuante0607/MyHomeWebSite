@@ -287,11 +287,11 @@
             `<div class='userInfo'>
                 <ul>
                     <li>ID: ${user.userId}</li>
-                    <li>姓名:${user.name}</li>
-                    <li>部門:${user.unit}</li>
-                    <li>生日:${birthdate.toLocaleDateString()}</li>
-                    <li>年齡:${user.age}歲</li>
-                    <li>地址:${user.addr}</li>
+                    <li>姓名: ${user.name}</li>
+                    <li>部門: ${user.unit}</li>
+                    <li>生日: ${birthdate.toLocaleDateString()}</li>
+                    <li>年齡: ${user.age}歲</li>
+                    <li>地址: ${user.addr}</li>
                 </ul>
             </div>
             `;
@@ -327,11 +327,15 @@
     }
     //處理回應
     function createTable(data) {
+        //talbeContainer
         const talbeContainer = document.getElementById('talbeContainer')
         talbeContainer.innerHTML = ''
-        //thead
+
+        //table
         const tableElem = document.createElement('table')
         tableElem.className = 'table table-bordered table-hover'
+
+        //thead
         const theadElem = document.createElement('thead')
         const theadRow = theadElem.insertRow()
         const titles = ['功能', '姓名', '單位', '權限']

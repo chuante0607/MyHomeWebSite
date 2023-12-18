@@ -13,7 +13,7 @@ namespace MyHomeWebSite.Methos
         }
 
         /// <summary>
-        /// 取得User資料
+        /// 取得User資料By acc
         /// </summary>
         /// <param name="login"></param>
         /// <returns></returns>
@@ -33,11 +33,11 @@ namespace MyHomeWebSite.Methos
             }
         }
         /// <summary>
-        /// 取得User清單
+        /// 取得所有User
         /// </summary>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        async public Task<List<Aemployee>> GetUsers()
+        async public Task<List<Aemployee>> GetUser()
         {
             try
             {
@@ -48,7 +48,11 @@ namespace MyHomeWebSite.Methos
                 throw new Exception(ex.Message);
             }
         }
-
+        /// <summary>
+        /// 更新User權限
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         async public Task<List<Aemployee>> UpdateUser(User user)
         {
             try
@@ -59,7 +63,7 @@ namespace MyHomeWebSite.Methos
                     data.Avatar = user.Avatar;
                     _dbContext.SaveChanges();
                 }
-                return await GetUsers();
+                return await GetUser();
             }
             catch (Exception ex)
             {

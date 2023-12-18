@@ -27,7 +27,7 @@ namespace MyHomeWebSite.Controllers
         [HttpPost]
         async public Task<List<Aemployee>> Index()
         {
-            return await _userMethod.GetUsers();
+            return await _userMethod.GetUser();
         }
 
         [HttpPut]
