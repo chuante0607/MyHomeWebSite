@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyHomeWebSite.Methos;
+using MyHomeWebSite.Methods;
 using MyHomeWebSite.Models;
 
 namespace MyHomeWebSite.Controllers

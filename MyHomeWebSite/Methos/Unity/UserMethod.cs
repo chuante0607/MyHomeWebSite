@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyHomeWebSite.Models;
 
-namespace MyHomeWebSite.Methos
+namespace MyHomeWebSite.Methods
 {
     public class UserMethod
     {
