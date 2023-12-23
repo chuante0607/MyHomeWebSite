@@ -3,7 +3,7 @@
     "MyHomeWebSite": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "Home",
+      "launchUrl": "WebPages/Login.Html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -13,7 +13,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "Home",
+      "launchUrl": "WebPages/Login.Html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

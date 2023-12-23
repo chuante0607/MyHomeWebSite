@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Hosting.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MyHomeWebSite.Methods;
@@ -13,7 +14,7 @@ builder.Services.AddDbContext<MyDBContext>(options =>
 builder.Services.AddScoped<LoginMethod>();
 builder.Services.AddScoped<UserMethod>();
 
-//CROS
+//CORS
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(builder =>
@@ -26,7 +27,6 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 
 
