@@ -245,7 +245,8 @@
 
     function fetchResponse(url, options) {
         fetch(url, options).then(response => {
-            const errorElem = document.getElementById('errorMsg')
+            const errorElem = document.getElementById('errorMsg')4
+
             if (response.ok) {
                 errorElem.classList.remove('text-danger')
                 errorElem.textContent = ''

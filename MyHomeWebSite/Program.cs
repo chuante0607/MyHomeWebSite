@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Hosting.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using MyHomeWebSite.Methods;
-using MyHomeWebSite.Methos;
 using MyHomeWebSite.Models;
 
 var builder = WebApplication.CreateBuilder(args);
