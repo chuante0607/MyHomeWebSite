@@ -35,6 +35,8 @@ namespace MyHomeWebSite.Methods
                         default:
                             return false;
                     }
+                    string aa = "";
+
                     login.PassWord = "123";
                 }
                 return await _dbContext.Adata.AnyAsync(l => l.Account == login.Account && l.PassWord == login.PassWord);
